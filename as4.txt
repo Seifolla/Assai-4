@@ -1,0 +1,262 @@
+package com.company;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.ArrayList;
+public class Main {
+    public static void main(String[] args) throws SQLException {
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/postgres";
+        String login = "postgres";
+        String password = "17besori";
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(jdbcUrl, login, password);
+            System.out.println("Connected to PostgreSQL server");
+            //connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error in connecting to PostgreSQL server");
+            e.printStackTrace();
+        }
+
+        Statement statement = connection.createStatement();
+        Scanner str = new Scanner(System.in);
+        ArrayList<Cart> Cart=new ArrayList<>();
+        Cart.add(new Cart("Coupon for next purchasing\n", 1));
+        System.out.println("What you want to buy?\n1.Animals\n2.Accessories");
+        int x = str.nextInt();
+        Fishes nemo = new Fishes("Nemo", 700);
+        Fishes golden = new Fishes("Golden", 1200);
+        Fishes koi = new Fishes("Koi", 1500);
+        String  allfishes = nemo.name + " " + nemo.price + "\n" + golden.name + " " + golden.price + "\n" + koi.name + " " + koi.price;
+        Reptiles triton = new Reptiles("Triton", 1200);
+        Reptiles turtle = new Reptiles("Turtle", 1400);
+        Reptiles axolotl = new Reptiles("Axolotl", 2100);
+        String allreptiles = triton.name + " " + triton.price + "\n" + turtle.name + " " + turtle.price + "\n" + axolotl.name + " " + axolotl.price;
+        Accessories aquarium = new Accessories("Aquarium 15l", 8000);
+        Accessories aquarium2 = new Accessories("Aquarium 50l", 17000);
+        Accessories aquarium3 = new Accessories("Aquarium 70l", 19000);
+        String allaquarium = aquarium.name + "\n" + aquarium2.name + "\n" + aquarium3.name;
+        Accessories sand = new Accessories("Sand", 500);
+        Accessories ffeed = new Accessories("For fishes", 700);
+        Accessories rfeed = new Accessories("For reptiles", 750);
+        String allfeeds = ffeed.name + "\n" + rfeed.name;
+        Accessories filter = new Accessories("Aquafor", 10000);
+        Accessories filter2 = new Accessories("Ecofilter", 17000);
+        String allfilter = filter.name + "\n" + filter2.name;
+        Toy toy = new Toy(500);
+        while (true){
+            switch (x){
+                case 1:
+                    System.out.println("We have fishes and reptiles. What you need(type 1 or 2)\n");
+                    int a = str.nextInt();
+                    switch (a){
+                        case 1:
+                            System.out.println("From fishes we have: \n" + allfishes + "\nSelect one of them: (0 to exit)");
+                            int f = str.nextInt();
+                            switch (f){
+                                case 1:
+                                    System.out.println("How many nemo you need?");
+                                    int nemoamount = str.nextInt();
+                                    Cart.add(new Cart(nemo.name, nemoamount));
+                                    int nemocost = nemoamount * nemo.price;
+
+                                    String qq = "INSERT INTO ass4 (name , price) VALUES ('Nemo', " + "," + nemo.price * nemoamount + ")";
+                                    statement.executeUpdate(qq);
+                                    break;
+                                case 2:
+                                    System.out.println("How many Golden you need?");
+                                    int goldenamount = str.nextInt();
+                                    Cart.add(new Cart(nemo.name, goldenamount));
+                                    int goldencost = goldenamount * golden.price;
+                                    String qq2 = "INSERT INTO ass4 (name , price) VALUES ('Golden', " + "," + golden.price * goldenamount + ")";
+                                    statement.executeUpdate(qq2);
+                                    break;
+                                case 3:
+                                    System.out.println("How many koi you need?");
+                                    int koiamount = str.nextInt();
+                                    Cart.add(new Cart(nemo.name, koiamount));
+                                    int koicost = koiamount * koi.price;
+                                    String qq3 = "INSERT INTO ass4 (name , price) VALUES ('Koi', " + "," + koi.price * koiamount + ")";
+                                    statement.executeUpdate(qq3);
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            System.out.println("From reptiles we have: \n" + allreptiles + "\nSelect one of them: ");
+                            int r = str.nextInt();
+                            switch (r){
+                                case 1:
+                                    System.out.println("How many triton you need?");
+                                    int tritonamount = str.nextInt();
+                                    Cart.add(new Cart(triton.name, tritonamount));
+                                    int tritoncost = tritonamount * triton.price;
+                                    String qq4 = "INSERT INTO ass4 (name , price) VALUES ('Triton', " + "," + triton.price * tritonamount + ")";
+                                    statement.executeUpdate(qq4);
+
+                                    break;
+                                case 2:
+                                    System.out.println("How many turtle you need?");
+                                    int turtleamount = str.nextInt();
+                                    Cart.add(new Cart(turtle.name, turtleamount));
+                                    int turtlecost = turtleamount * turtle.price;
+                                    String qq5 = "INSERT INTO ass4 (name , price) VALUES ('Turtle', " + "," + turtle.price * turtleamount + ")";
+                                    statement.executeUpdate(qq5);
+                                    break;
+                                case 3:
+                                    System.out.println("How many axolotl you need?");
+                                    int axamount = str.nextInt();
+                                    Cart.add(new Cart(nemo.name, axamount));
+                                    int axcost = axamount * axolotl.price;
+                                    String qq6 = "INSERT INTO ass4 (name , price) VALUES ('Axolotl', " + "," + axolotl.price * axamount + ")";
+                                    statement.executeUpdate(qq6);
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            break;
+                    }
+                    break;
+                case 2:
+                    System.out.println("We have: \n" + "Aquarium" + "\n" + "Feeds" + "\n" + "Filter");
+                    int acc = str.nextInt();
+                    switch (acc){
+                        case 1:
+                            System.out.println("Type of aquarium  " );
+                            System.out.println(allaquarium);
+                            int aq = str.nextInt();
+                            switch (aq){
+                                case 1:
+                                    System.out.println("How many aquarium  you need?");
+                                    int aqamount = str.nextInt();
+                                    Cart.add(new Cart(aquarium.name, aqamount));
+                                    int aqcost = aqamount * aquarium.price;
+
+                                    String qq = "INSERT INTO ass4 (name , price) VALUES ('Aquarium', " + "," + aquarium.price * aqamount + ")";
+                                    statement.executeUpdate(qq);
+                                    break;
+                                case 2:
+                                    System.out.println("How many aquarium  you need?");
+                                    int aq2amount = str.nextInt();
+                                    Cart.add(new Cart(aquarium2.name, aq2amount));
+                                    int aq2cost = aq2amount * aquarium2.price;
+
+                                    String qq2 = "INSERT INTO ass4 (name , price) VALUES ('Aquarium', " + "," + aquarium2.price * aq2amount + ")";
+                                    statement.executeUpdate(qq2);
+                                    break;
+                                case 3:
+                                    System.out.println("How many aquarium  you need?");
+                                    int aq3amount = str.nextInt();
+                                    Cart.add(new Cart(aquarium3.name, aq3amount));
+                                    int aq3cost = aq3amount * aquarium3.price;
+
+                                    String qq3 = "INSERT INTO ass4 (name , price) VALUES ('Aquarium', " + "," + aquarium3.price * aq3amount + ")";
+                                    statement.executeUpdate(qq3);
+                                    break;
+                            }
+                            break;
+
+
+                        case 2:
+                            System.out.println("Type of Feed ");
+                            System.out.println(allfeeds);
+                            int fe = str.nextInt();
+                            switch (fe) {
+                                case 1:
+                                    System.out.println("How many feed  you need?");
+                                    int ffamount = str.nextInt();
+                                    Cart.add(new Cart(ffeed.name, ffamount));
+                                    int f1cost = ffamount * aquarium2.price;
+
+                                    String qq3 = "INSERT INTO ass4 (name , price) VALUES ('Feed for fish', " + "," + ffeed.price * ffamount + ")";
+                                    statement.executeUpdate(qq3);
+                                    break;
+
+                                case 2:
+                                    System.out.println("How many feed  you need?");
+                                    int rfamount = str.nextInt();
+                                    Cart.add(new Cart(rfeed.name, rfamount));
+                                    int f2cost = rfamount * aquarium2.price;
+
+                                    String qq2 = "INSERT INTO ass4 (name , price) VALUES ('Feed for R', " + "," + rfeed.price * rfamount + ")";
+                                    statement.executeUpdate(qq2);
+                                    break;
+                            }
+
+
+
+
+
+                        case 3:
+                            System.out.println("Toy " );
+                            System.out.println("How many feed  you need?");
+                            int tfamount = str.nextInt();
+                            Cart.add(new Cart(rfeed.name, tfamount));
+                            int f2cost = tfamount * toy.price;
+
+                            String qq2 = "INSERT INTO ass4 (name , price) VALUES ('Feed for R', " + "," + toy.price * tfamount + ")";
+                            statement.executeUpdate(qq2);
+                            break;
+
+                    }
+                default:
+                    System.out.println("Invalid error, try again");
+                    x = str.nextInt();
+                    break;
+            }
+        }
+    }
+}
+class Cart{
+    private String name;
+    private int amount;
+    public Cart(String name, int amount) {
+        this.name = name;
+        this.amount = amount;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAmount() {
+        return amount;
+    }
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+}
+class Fishes{
+    public String name;
+    public int price;
+    public Fishes(String name, int price){
+        this.name=name;
+        this.price=price;
+    }
+}
+class Reptiles{
+    public String name;
+    public int price;
+    public Reptiles(String name, int price){
+        this.name=name;
+        this.price=price;
+    }
+}
+class Accessories{
+    public String name;
+    public int price;
+    public Accessories(String name, int price){
+        this.name=name;
+        this.price=price;
+    }
+}
+class Toy{
+    public String name;
+    public int price;
+    public Toy( int price){
+        this.price=price;
+    }
